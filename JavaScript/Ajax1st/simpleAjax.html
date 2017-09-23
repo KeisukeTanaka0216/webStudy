@@ -1,0 +1,31 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html;charset=UTF-8">
+<title>XMLHttpRequest()の基本</title>
+<script type="text/javascript"><!--
+function loadTextFile()
+{
+  try{
+    httpObj = new XMLHttpRequest();
+  }
+  catch(e){
+    console.log('AAAAAAAAAAAAAAAAAAAAA');
+  }
+httpObj.onload = displayData;
+httpObj.open("GET","http://localhost/webStudy/JavaScript/data/data.txt",true);
+httpObj.send(null);
+}
+function displayData()
+{
+document.ajaxForm.result.value = httpObj.responseText;
+}
+// --></script>
+</head>
+<body>
+<h1>XMLHttpRequest()の基本 (IE以外)</h1>
+<form name="ajaxForm">
+<input type="button" value="読み込み" onClick="loadTextFile()"><br>
+<textarea name="result" cols="40" rows="5"></textarea>
+</form>
+</body>
+</html>

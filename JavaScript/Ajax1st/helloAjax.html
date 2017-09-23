@@ -1,0 +1,76 @@
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8">
+  <title> hello </title>
+  <script type="text/javascript"><!--
+
+    function getXHR() {
+      var req;
+      try{
+        req = new XMLHttpRequest();
+      }
+      catch(e) { console.log('ERROR DESHITA');}
+
+      //catch(e) {
+      //  try{
+      //    console.log('AAAAAAAAA');
+      //    req = new ActiveXObject('Msxml2.XMLHTTP');
+      //  } catch(e) {
+      //    try{
+      //      console.log('BBBBBBBBB');
+      //      req = new ActiveXObject('Microsoft.XMLHTTP');
+      //    }
+      //    catch (e){
+      //      console.log('CCCCCCCCC');
+      //    }
+      //  }
+      //}
+      return req;
+    }
+    function asyncSend() {
+      var req = getXHR();
+      req.onreadystatechange = function(){
+        var result = document.getElementById('result');
+        if(req.readyState ==4){
+          if(req.status == 200){
+            result.innerHTML = req.responseText;
+          }
+          else{
+            result.inenerHTML = "Faled communicate with server";
+          }
+        } else {
+          result.innerHTML = "communicating...";
+        }
+      }
+
+      var flg = new Boolean();
+      flg = false;
+
+      if (flg == true){
+        // POST case ==> うまく値をPHPに渡せない
+        req.open('POST', 'helloAjax.php', true);
+        req.setRequestHeader('content-type',
+          'application/x-www-urlencoded;charset=UTF-8');
+        req.send('name=' + encodeURIComponent(document.fm.name.value));
+      }
+      else{
+        // GET case
+        req.open('GET', 'helloAjax.php?name=' +
+          encodeURIComponent(document.fm.name.value), true);
+        req.send(null);
+      }
+      return false;
+    }
+    // --></script>
+  </head>
+
+  <body>
+    <form name="fm">
+        <label> namae:
+        <input type="text" name="name" value="TANAKA" size="15" />
+        </label>
+        <input type="button" name="submit" value="send" onclick="asyncSend()" />
+      </form>
+      <div id="result"></div>
+  </body>
+  </html>
